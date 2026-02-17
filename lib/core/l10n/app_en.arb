@@ -6,5 +6,68 @@
   "onboardingDescription2": "Experience lightning-fast messaging with intuitive features designed to keep your conversations flowing.",
   "onboardingDescription3": "Your privacy is our priority. Chat with peace of mind knowing your data is protected.",
   "next": "Next",
-  "getStarted": "Get Started"
+  "getStarted": "Get Started",
+
+  "notVerifiedEmailException": "Email is not verified",
+  "invalidCredentialsException": "Invalid email or password",
+  "userNotFoundException": "User not found",
+  "networkException": "Network error occurred",
+  "unknownException": "Something went wrong, try again",
+  "sharedPreferencesException": "Shared preferences error",
+  "registerException": "The email address is already in use by another account",
+  "timeLimitException": "Time limit exceeded",
+  "formatCodeException": "Format code error",
+  "permissionDeniedException": "You don't have permission to perform this action",
+  "documentNotFoundException": "Requested document was not found",
+  "alreadyExistsException": "Document already exists",
+  "unauthenticatedException": "User is not authenticated",
+  "deadlineExceededException": "Request timed out, try again",
+  "resourceExhaustedException": "Quota exceeded or resource exhausted",
+  "unavailableException": "Service is currently unavailable",
+  "cancelledException": "Operation was cancelled",
+  "invalidArgumentException": "Invalid data was provided",
+  "dataLossException": "Data loss occurred",
+  "unknownFirestoreException": "Something went wrong, please try again",
+
+  "email" : "Email",
+  "password" : "Password",
+  "forgetPassword": "Forget Password",
+  "login": "Login",
+  "doNotHaveAccount": "Don't have an account?",
+  "registerNow": "Register Now",
+
+  "name" : "Name",
+  "rePassword" : "Re-Password",
+  "register" : "Register",
+  "alreadyHaveAccount" : "Already have an account?",
+  "loginNow" : "Login Now",
+
+  "nameRequired": "Name is required",
+  "nameInvalid": "Please enter a valid name (at least 3 letters)",
+
+  "emailRequired": "Email is required",
+  "emailInvalid": "Please enter a valid email address",
+
+  "passwordRequired": "Password is required",
+  "passwordInvalid": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character as @, $, !, %, *, ?, &, #",
+
+  "rePasswordRequired" : "Re Password Required",
+  "rePasswordInvalid" : "Password doesn`t match",
+
+  "passwordConfirmRequired": "Please confirm your password",
+  "passwordsNotMatch": "Passwords do not match",
+
+  "titleEventRequired": "Title is required",
+  "descriptionEventRequired": "Description is required",
+
+  "loading": "Loading...",
+  "emailVerificationMessage": "We will send a verification email to your email address. Please check your inbox or spam folder and verify your account. You cannot register with this email again if you do not complete the verification process.",
+  "ok": "OK",
+  "resendVerificationEmail": "Re-send verification email",
+  "verificationMessage": "Verification Message",
+  "error" : "Error!",
+  "tryAgain": "Try again",
+  "sendResetPasswordEmail": "Send Reset Password Email",
+  "resetPasswordEmailSent": "We sent you an email to reset your password. Please check your inbox or spam folder and follow the instructions.",
+  "emailSentSuccessfully": "Email has been sent successfully"
 }

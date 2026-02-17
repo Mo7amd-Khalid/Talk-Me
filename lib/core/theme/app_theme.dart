@@ -5,6 +5,7 @@ import 'app_colors.dart';
 abstract class AppTheme{
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
+    scaffoldBackgroundColor: AppColors.blue50,
 
     colorScheme: const ColorScheme(
       brightness: Brightness.light,

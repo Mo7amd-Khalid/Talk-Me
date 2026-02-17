@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "536029813863",
+    "project_id": "talk-me-1879e",
+    "storage_bucket": "talk-me-1879e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536029813863:android:0db8ef025f306f6154c8c2",
+        "android_client_info": {
+          "package_name": "com.example.talk_me"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvuDK61hVV_q_vcl38_pfgi-_0P_1ahqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

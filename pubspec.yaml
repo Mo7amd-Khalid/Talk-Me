@@ -45,6 +45,9 @@ dependencies:
   flutter_bloc:
   injectable:
   get_it:
+  animate_do: ^4.2.0
+  animated_toggle_switch:
+  image_picker:
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +78,7 @@ flutter:
   assets:
     - assets/onboarding/
     - assets/logo/
+    - assets/images/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
