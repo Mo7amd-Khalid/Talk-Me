@@ -145,6 +145,324 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get getStarted;
+
+  /// No description provided for @notVerifiedEmailException.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is not verified'**
+  String get notVerifiedEmailException;
+
+  /// No description provided for @invalidCredentialsException.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email or password'**
+  String get invalidCredentialsException;
+
+  /// No description provided for @userNotFoundException.
+  ///
+  /// In en, this message translates to:
+  /// **'User not found'**
+  String get userNotFoundException;
+
+  /// No description provided for @networkException.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error occurred'**
+  String get networkException;
+
+  /// No description provided for @unknownException.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong, try again'**
+  String get unknownException;
+
+  /// No description provided for @sharedPreferencesException.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared preferences error'**
+  String get sharedPreferencesException;
+
+  /// No description provided for @registerException.
+  ///
+  /// In en, this message translates to:
+  /// **'The email address is already in use by another account'**
+  String get registerException;
+
+  /// No description provided for @timeLimitException.
+  ///
+  /// In en, this message translates to:
+  /// **'Time limit exceeded'**
+  String get timeLimitException;
+
+  /// No description provided for @formatCodeException.
+  ///
+  /// In en, this message translates to:
+  /// **'Format code error'**
+  String get formatCodeException;
+
+  /// No description provided for @permissionDeniedException.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have permission to perform this action'**
+  String get permissionDeniedException;
+
+  /// No description provided for @documentNotFoundException.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested document was not found'**
+  String get documentNotFoundException;
+
+  /// No description provided for @alreadyExistsException.
+  ///
+  /// In en, this message translates to:
+  /// **'Document already exists'**
+  String get alreadyExistsException;
+
+  /// No description provided for @unauthenticatedException.
+  ///
+  /// In en, this message translates to:
+  /// **'User is not authenticated'**
+  String get unauthenticatedException;
+
+  /// No description provided for @deadlineExceededException.
+  ///
+  /// In en, this message translates to:
+  /// **'Request timed out, try again'**
+  String get deadlineExceededException;
+
+  /// No description provided for @resourceExhaustedException.
+  ///
+  /// In en, this message translates to:
+  /// **'Quota exceeded or resource exhausted'**
+  String get resourceExhaustedException;
+
+  /// No description provided for @unavailableException.
+  ///
+  /// In en, this message translates to:
+  /// **'Service is currently unavailable'**
+  String get unavailableException;
+
+  /// No description provided for @cancelledException.
+  ///
+  /// In en, this message translates to:
+  /// **'Operation was cancelled'**
+  String get cancelledException;
+
+  /// No description provided for @invalidArgumentException.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid data was provided'**
+  String get invalidArgumentException;
+
+  /// No description provided for @dataLossException.
+  ///
+  /// In en, this message translates to:
+  /// **'Data loss occurred'**
+  String get dataLossException;
+
+  /// No description provided for @unknownFirestoreException.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong, please try again'**
+  String get unknownFirestoreException;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @forgetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forget Password'**
+  String get forgetPassword;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @doNotHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get doNotHaveAccount;
+
+  /// No description provided for @registerNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Register Now'**
+  String get registerNow;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @rePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-Password'**
+  String get rePassword;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register;
+
+  /// No description provided for @alreadyHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyHaveAccount;
+
+  /// No description provided for @loginNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Login Now'**
+  String get loginNow;
+
+  /// No description provided for @nameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get nameRequired;
+
+  /// No description provided for @nameInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid name (at least 3 letters)'**
+  String get nameInvalid;
+
+  /// No description provided for @emailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get emailRequired;
+
+  /// No description provided for @emailInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get emailInvalid;
+
+  /// No description provided for @passwordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get passwordRequired;
+
+  /// No description provided for @passwordInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character as @, \$, !, %, *, ?, &, #'**
+  String get passwordInvalid;
+
+  /// No description provided for @rePasswordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Re Password Required'**
+  String get rePasswordRequired;
+
+  /// No description provided for @rePasswordInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Password doesn`t match'**
+  String get rePasswordInvalid;
+
+  /// No description provided for @passwordConfirmRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get passwordConfirmRequired;
+
+  /// No description provided for @passwordsNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsNotMatch;
+
+  /// No description provided for @titleEventRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Title is required'**
+  String get titleEventRequired;
+
+  /// No description provided for @descriptionEventRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Description is required'**
+  String get descriptionEventRequired;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loading;
+
+  /// No description provided for @emailVerificationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'We will send a verification email to your email address. Please check your inbox or spam folder and verify your account. You cannot register with this email again if you do not complete the verification process.'**
+  String get emailVerificationMessage;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @resendVerificationEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-send verification email'**
+  String get resendVerificationEmail;
+
+  /// No description provided for @verificationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification Message'**
+  String get verificationMessage;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error!'**
+  String get error;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
+
+  /// No description provided for @sendResetPasswordEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Reset Password Email'**
+  String get sendResetPasswordEmail;
+
+  /// No description provided for @resetPasswordEmailSent.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent you an email to reset your password. Please check your inbox or spam folder and follow the instructions.'**
+  String get resetPasswordEmailSent;
+
+  /// No description provided for @emailSentSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Email has been sent successfully'**
+  String get emailSentSuccessfully;
 }
 
 class _AppLocalizationsDelegate

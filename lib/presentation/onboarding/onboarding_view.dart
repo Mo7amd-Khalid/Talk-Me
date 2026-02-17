@@ -10,6 +10,7 @@ import 'package:talk_me/core/utils/white_spaces.dart';
 import 'package:talk_me/data/models/onboarding_model.dart';
 import 'package:talk_me/presentation/onboarding/cubit/onboarding_contract.dart';
 import 'package:talk_me/presentation/onboarding/cubit/onboarding_cubit.dart';
+import 'package:talk_me/presentation/widgets/app_dialogs.dart';
 
 class OnboardingView extends StatefulWidget {
   OnboardingView({super.key});
@@ -30,6 +31,8 @@ class _OnboardingViewState extends State<OnboardingView> {
       switch (navigationState) {
         case NavigateToLoginScreen():
           Navigator.pushReplacementNamed(context, Routes.loginView);
+        case ShowErrorDialog():
+          AppDialogs.actionDialog(context: context,content: navigationState.message);
       }
     });
   }
@@ -60,7 +63,6 @@ class _OnboardingViewState extends State<OnboardingView> {
       value: onboardingCubit,
       child: BlocBuilder<OnboardingCubit, OnboardingState>(
         builder: (_, state) => Scaffold(
-          backgroundColor: AppColors.blue50,
           body: SafeArea(
             child: Column(
               children: [
@@ -126,7 +128,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                       child: FilledButton(
                         onPressed: () {
                           if (state.currentIndex == onboardingList.length - 1) {
-                            onboardingCubit.doAction(GoToLoginScreen());
+                            onboardingCubit.doAction(GoToLoginScreen(context: context));
                           } else {
                             _controller.nextPage(
                               duration: Duration(milliseconds: 200),
