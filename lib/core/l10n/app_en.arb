@@ -69,5 +69,15 @@
   "tryAgain": "Try again",
   "sendResetPasswordEmail": "Send Reset Password Email",
   "resetPasswordEmailSent": "We sent you an email to reset your password. Please check your inbox or spam folder and follow the instructions.",
-  "emailSentSuccessfully": "Email has been sent successfully"
+  "emailSentSuccessfully": "Email has been sent successfully",
+  "addFriend" : "Add Friend",
+  "remove": "Remove",
+  "noItems": "There are no users to show",
+
+  "language": "Language",
+  "theme": "Theme",
+  "logout": "Logout",
+  "friends" : "Friends",
+  "request" : "Requests",
+  "viewYourProfile" : "View Your Profile"
 }

@@ -28,9 +28,12 @@ import '../../data/repo_impl/auth_repo_impl.dart' as _i540;
 import '../../data/repo_impl/repo_impl.dart' as _i212;
 import '../../domain/repository/auth_repository.dart' as _i614;
 import '../../domain/repository/repository_contract.dart' as _i427;
+import '../../presentation/bottom_nav_bar/people/cubit/people_cubit.dart'
+    as _i588;
 import '../../presentation/forget_password/cubit/forget_password_cubit.dart'
     as _i671;
 import '../../presentation/login/cubit/login_cubit.dart' as _i101;
+import '../../presentation/main/cubit/main_cubit.dart' as _i671;
 import '../../presentation/onboarding/cubit/onboarding_cubit.dart' as _i657;
 import '../../presentation/register/cubit/register_cubit.dart' as _i849;
 import '../../presentation/setup_cubit/setup_cubit.dart' as _i529;
@@ -70,7 +73,13 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.factory<_i427.RepositoryContract>(
-      () => _i212.RepoImpl(gh<_i486.LocalDatasource>()),
+      () => _i212.RepoImpl(
+        gh<_i486.LocalDatasource>(),
+        gh<_i725.FirestoreRemoteDatasource>(),
+      ),
+    );
+    gh.factory<_i588.PeopleCubit>(
+      () => _i588.PeopleCubit(gh<_i427.RepositoryContract>()),
     );
     gh.factory<_i614.AuthRepository>(
       () => _i540.AuthRepoImpl(
@@ -81,6 +90,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i657.OnboardingCubit>(
       () => _i657.OnboardingCubit(gh<_i427.RepositoryContract>()),
+    );
+    gh.singleton<_i671.MainCubit>(
+      () => _i671.MainCubit(gh<_i614.AuthRepository>()),
     );
     gh.factory<_i671.ForgetPasswordCubit>(
       () => _i671.ForgetPasswordCubit(gh<_i614.AuthRepository>()),

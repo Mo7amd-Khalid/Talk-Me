@@ -48,6 +48,7 @@ dependencies:
   animate_do: ^4.2.0
   animated_toggle_switch:
   image_picker:
+  shimmer:
 
 dev_dependencies:
   flutter_test:

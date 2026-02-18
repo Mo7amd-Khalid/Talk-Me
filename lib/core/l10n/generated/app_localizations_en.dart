@@ -200,4 +200,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emailSentSuccessfully => 'Email has been sent successfully';
+
+  @override
+  String get addFriend => 'Add Friend';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get noItems => 'There are no users to show';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get friends => 'Friends';
+
+  @override
+  String get request => 'Requests';
+
+  @override
+  String get viewYourProfile => 'View Your Profile';
 }

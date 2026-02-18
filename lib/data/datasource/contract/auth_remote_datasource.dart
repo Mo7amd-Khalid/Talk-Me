@@ -9,6 +9,7 @@ abstract class AuthRemoteDatasource {
     String password,
   );
   Future<Results<UserCredential>> login(String email, String password);
+  Future<Results<User>> getCurrentUserData();
   Future<Results<void>> sendEmailVerification();
   Future<Results<void>> sendResetPasswordEmail(String email);
   Future<Results<void>> logout();
