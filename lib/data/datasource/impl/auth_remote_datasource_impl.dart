@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:talk_me/data/network/results.dart';
@@ -12,7 +11,6 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource{
   AuthRemoteDatasourceImpl(this._firebaseAuth);
   final FirebaseAuth _firebaseAuth;
 
-  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   @override
   Future<Results<UserCredential>> register(String name,String image, String email, String password) {
@@ -51,6 +49,14 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource{
     return safeCall(()async{
       await _firebaseAuth.sendPasswordResetEmail(email: email);
       return Success();
+    });
+  }
+
+  @override
+  Future<Results<User>> getCurrentUserData() {
+    return safeCall(()async{
+      var user = _firebaseAuth.currentUser;
+      return Success(data: user);
     });
   }
 

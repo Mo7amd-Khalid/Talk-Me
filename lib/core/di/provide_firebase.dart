@@ -17,6 +17,7 @@ abstract class ProvideFirebase {
   @lazySingleton
   CollectionReference<UserDm> userFirestore() =>
       FirebaseFirestore.instance.collection(AppKeysConstant.usersCollectionKey).withConverter(
-          fromFirestore: UserDm.fromFirestore, toFirestore: (UserDm user, option)=>user.toFirestore());
+          fromFirestore: UserDm.fromFirestore,
+          toFirestore: (UserDm user, option) => user.toFirestore());
 
 }

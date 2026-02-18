@@ -463,6 +463,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Email has been sent successfully'**
   String get emailSentSuccessfully;
+
+  /// No description provided for @addFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Friend'**
+  String get addFriend;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @noItems.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no users to show'**
+  String get noItems;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @friends.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends'**
+  String get friends;
+
+  /// No description provided for @request.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get request;
+
+  /// No description provided for @viewYourProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'View Your Profile'**
+  String get viewYourProfile;
 }
 
 class _AppLocalizationsDelegate

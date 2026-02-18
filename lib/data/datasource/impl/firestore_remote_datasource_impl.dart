@@ -43,7 +43,15 @@ class FirestoreRemoteDatasourceImpl implements FirestoreRemoteDatasource {
           return Failure(exception: UserNotFoundException(), message: AppExceptionMapper.convertStringMessageToLocalizationStringMessage(UserNotFoundException(), context));
         }
       return Success(data: true);
-      //return Failure(exception: UserNotFoundException(), message: AppExceptionMapper.convertStringMessageToLocalizationStringMessage(UserNotFoundException(), context));
+    });
+  }
+
+  @override
+  Future<Results<List<UserDm>>> getUsers() {
+    return safeCall(()async{
+      var response = await _userFirestore.get();
+      List<UserDm> users = response.docs.map((doc) => doc.data()).toList();
+      return Success(data: users);
     });
   }
 }

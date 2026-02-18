@@ -10,10 +10,10 @@ class UserDm {
 
   UserDm({
     required this.id,
-    required  this.name,
-    required  this.email,
-    required  this.image,
-    required  this.additionRequest,
+    required this.name,
+    required this.email,
+    required this.image,
+    required this.additionRequest,
     required this.friendsIds});
 
 
@@ -21,14 +21,14 @@ class UserDm {
       DocumentSnapshot<Map<String, dynamic>> snapshot,
       SnapshotOptions? options,
       ) {
-    final data = snapshot.data();
+    final data = snapshot.data() ?? <String,dynamic> {};
     return UserDm(
-      id: data?['id'],
-      name: data?['name'],
-      email: data?['email'],
-      image: data?['image'],
-      additionRequest: data?['additionRequest'],
-      friendsIds: data?['friendsIds'],
+      id: data['id'],
+      name: data['name'],
+      email: data['email'],
+      image: data['image'],
+      additionRequest: ((data['additionRequest']??[]) as List<dynamic>).map((e) => e.toString()).toList(),
+      friendsIds: ((data['friendsIds']??[]) as List<dynamic>).map((e) => e.toString()).toList(),
     );
   }
 

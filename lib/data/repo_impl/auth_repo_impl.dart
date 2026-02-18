@@ -125,4 +125,16 @@ class AuthRepoImpl implements AuthRepository {
         return Failure(exception: response.exception, message: response.message);
     }
   }
+
+  @override
+  Future<Results<User>> getCurrentUserData() async{
+    var response = await _authRemoteDatasource.getCurrentUserData();
+    switch (response) {
+
+      case Success<User>():
+        return Success(data: response.data);
+      case Failure<User>():
+        return Failure(exception: response.exception, message: response.message);
+    }
+  }
 }

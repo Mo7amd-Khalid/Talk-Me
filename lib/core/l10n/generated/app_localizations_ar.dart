@@ -198,4 +198,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get emailSentSuccessfully => 'تم إرسال البريد الإلكتروني بنجاح';
+
+  @override
+  String get addFriend => 'إضافة صديق';
+
+  @override
+  String get remove => 'إزالة';
+
+  @override
+  String get noItems => 'لا يوجد مستخدمون لعرضهم';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get theme => 'المظهر';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get friends => 'الأصدقاء';
+
+  @override
+  String get request => 'طلبات الصداقة';
+
+  @override
+  String get viewYourProfile => 'عرض الصفحة الشخصية';
 }

@@ -1,14 +1,15 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:talk_me/core/di/di.dart';
 
 import '../setup_cubit/setup_contract.dart';
 import '../setup_cubit/setup_cubit.dart';
 
 class ThemeSwitch extends StatelessWidget {
-  const ThemeSwitch({required this.cubit, super.key});
+  ThemeSwitch({super.key});
 
-  final SetupCubit cubit;
+  final SetupCubit cubit = getIt();
 
   @override
   Widget build(BuildContext context) {
