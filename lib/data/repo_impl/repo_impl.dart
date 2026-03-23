@@ -25,13 +25,73 @@ class RepoImpl implements RepositoryContract{
   }
 
   @override
-  Future<Results<List<UserDm>>> getUsers(String uID) async{
+  Future<Results<List<UserDm>>> getUsers(UserDm myData) async{
     var response = await _firestoreRemoteDatasource.getUsers();
     switch(response) {
       case Success<List<UserDm>>():
         {
-          response.data!.removeWhere((user) => user.id == uID);
+          response.data!.removeWhere((user) => user.id == myData.id || myData.friendsIds.contains(user.id));
           return Success(data: response.data);
+        }
+      case Failure<List<UserDm>>():
+        return Failure(exception: response.exception, message: response.message);
+    }
+  }
+
+  @override
+  Future<Results<void>> sendAddRequest(String myID, String friendID) async{
+    var response = await _firestoreRemoteDatasource.sendAddRequest(myID, friendID);
+    switch (response) {
+
+      case Success<void>():
+        return Success();
+      case Failure<void>():
+        return Failure(exception: response.exception, message: response.message);
+    }
+  }
+
+  @override
+  Future<Results<void>> removeAddRequest(String myID, String friendID) async{
+    var response = await _firestoreRemoteDatasource.removeAddRequest(myID, friendID);
+    switch (response) {
+      case Success<void>():
+        return Success();
+      case Failure<void>():
+        return Failure(exception: response.exception, message: response.message);
+    }
+  }
+
+  @override
+  Future<Results<UserDm>> getMyUserData(String uid) async{
+    var response = await _firestoreRemoteDatasource.getMyUserData(uid);
+    switch(response) {
+      case Success<UserDm>():
+        return Success(data: response.data);
+      case Failure<UserDm>():
+        return Failure(exception: response.exception, message: response.message);
+    }
+  }
+
+  @override
+  Future<Results<void>> acceptAddRequest(String myID, String friendID) async{
+    var response = await _firestoreRemoteDatasource.acceptAddRequest(myID, friendID);
+    switch(response) {
+      case Success<void>():
+        return Success();
+      case Failure<void>():
+        return Failure(exception: response.exception, message: response.message);
+    }
+
+  }
+
+  @override
+  Future<Results<List<UserDm>>> getFriends(UserDm myData) async{
+    var response = await _firestoreRemoteDatasource.getUsers();
+    switch(response) {
+      case Success<List<UserDm>>():
+        {
+          List<UserDm> friends = response.data!.where((user) => myData.friendsIds.contains(user.id)).toList();
+          return Success(data: friends);
         }
       case Failure<List<UserDm>>():
         return Failure(exception: response.exception, message: response.message);

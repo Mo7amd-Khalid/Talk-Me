@@ -6,15 +6,18 @@ class UserDm {
   String email;
   String image;
   List<String> friendsIds;
-  List<String> additionRequest;
+  List<String> sentRequest;
+  List<String> receivedRequest;
 
   UserDm({
     required this.id,
     required this.name,
     required this.email,
     required this.image,
-    required this.additionRequest,
-    required this.friendsIds});
+    required this.sentRequest,
+    required this.receivedRequest,
+    required this.friendsIds,
+  });
 
 
   factory UserDm.fromFirestore(
@@ -27,7 +30,8 @@ class UserDm {
       name: data['name'],
       email: data['email'],
       image: data['image'],
-      additionRequest: ((data['additionRequest']??[]) as List<dynamic>).map((e) => e.toString()).toList(),
+      sentRequest: ((data['sentRequest']??[]) as List<dynamic>).map((e) => e.toString()).toList(),
+      receivedRequest: ((data['receivedRequest']??[]) as List<dynamic>).map((e) => e.toString()).toList(),
       friendsIds: ((data['friendsIds']??[]) as List<dynamic>).map((e) => e.toString()).toList(),
     );
   }
@@ -38,7 +42,8 @@ class UserDm {
        "name": name,
        "email": email,
        "image": image,
-       "additionRequest": additionRequest,
+       "sentRequest": sentRequest,
+       "receivedRequest": receivedRequest,
        "friendsIds": friendsIds,
     };
   }

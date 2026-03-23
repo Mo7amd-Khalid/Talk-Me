@@ -55,7 +55,12 @@ class _RegisterViewState extends State<RegisterView> {
             }
           );
         case ShowErrorDialog():
-          AppDialogs.actionDialog(context: context, content: state.message);
+          Navigator.pop(context);
+          AppDialogs.actionDialog(
+              context: context,
+              content: state.message,
+            posActionTitle: context.locale!.tryAgain
+          );
         case NavigateToLoginScreen():
           Navigator.pushReplacementNamed(context, Routes.loginView);
       }

@@ -76,16 +76,11 @@ class _OnboardingViewState extends State<OnboardingView> {
                         children: [
                           Image.asset(onboardingList[index].image),
                           20.verticalSpace,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                onboardingList[index].title,
-                                textAlign: TextAlign.center,
-                                style: context.textStyle.headlineSmall!
-                                    .copyWith(fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                          Text(
+                            onboardingList[index].title,
+                            textAlign: TextAlign.center,
+                            style: context.textStyle.headlineSmall!
+                                .copyWith(fontWeight: FontWeight.bold),
                           ),
                           20.verticalSpace,
                           Text(

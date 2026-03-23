@@ -39,7 +39,7 @@ class LoginCubit extends BaseCubit<LoginState, LoginActions, LoginNavigation>{
     var response = await _authRepository.login(context, email, password);
     switch(response) {
       case Success<UserCredential>():
-        emitNavigation(NavigateToMainScreen());
+        emitNavigation(NavigateToMainScreen(uid: response.data!.user!.uid));
       case Failure<UserCredential>():
         emitNavigation(ShowErrorDialog(message: response.message!));
     }
