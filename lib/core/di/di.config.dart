@@ -23,13 +23,17 @@ import '../../data/datasource/impl/auth_remote_datasource_impl.dart' as _i939;
 import '../../data/datasource/impl/firestore_remote_datasource_impl.dart'
     as _i665;
 import '../../data/datasource/impl/local_datasource_impl.dart' as _i23;
+import '../../data/models/message_dm.dart' as _i412;
 import '../../data/models/user_dm.dart' as _i955;
 import '../../data/repo_impl/auth_repo_impl.dart' as _i540;
 import '../../data/repo_impl/repo_impl.dart' as _i212;
 import '../../domain/repository/auth_repository.dart' as _i614;
 import '../../domain/repository/repository_contract.dart' as _i427;
-import '../../presentation/bottom_nav_bar/people/cubit/people_cubit.dart'
-    as _i588;
+import '../../presentation/bottom_nav_bar/chats/cubit/chat_cubit.dart' as _i928;
+import '../../presentation/bottom_nav_bar/settings/cubit/settings_cubit.dart'
+    as _i38;
+import '../../presentation/bottom_nav_bar/users/cubit/users_cubit.dart'
+    as _i501;
 import '../../presentation/forget_password/cubit/forget_password_cubit.dart'
     as _i671;
 import '../../presentation/login/cubit/login_cubit.dart' as _i101;
@@ -61,6 +65,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i974.CollectionReference<_i955.UserDm>>(
       () => provideFirebase.userFirestore(),
     );
+    gh.lazySingleton<_i974.CollectionReference<_i412.MessageDm>>(
+      () => provideFirebase.chatFirestore(gh<String>()),
+    );
     gh.factory<_i486.LocalDatasource>(
       () => _i23.LocalDatasourceImpl(gh<_i460.SharedPreferences>()),
     );
@@ -72,14 +79,26 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i974.CollectionReference<_i955.UserDm>>(),
       ),
     );
+    gh.singleton<_i671.MainCubit>(
+      () => _i671.MainCubit(
+        gh<_i725.FirestoreRemoteDatasource>(),
+        gh<_i460.SharedPreferences>(),
+      ),
+    );
     gh.factory<_i427.RepositoryContract>(
       () => _i212.RepoImpl(
         gh<_i486.LocalDatasource>(),
         gh<_i725.FirestoreRemoteDatasource>(),
       ),
     );
-    gh.factory<_i588.PeopleCubit>(
-      () => _i588.PeopleCubit(gh<_i427.RepositoryContract>()),
+    gh.factory<_i928.ChatCubit>(
+      () => _i928.ChatCubit(gh<_i427.RepositoryContract>()),
+    );
+    gh.factory<_i501.UsersCubit>(
+      () => _i501.UsersCubit(
+        gh<_i427.RepositoryContract>(),
+        gh<_i671.MainCubit>(),
+      ),
     );
     gh.factory<_i614.AuthRepository>(
       () => _i540.AuthRepoImpl(
@@ -91,8 +110,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i657.OnboardingCubit>(
       () => _i657.OnboardingCubit(gh<_i427.RepositoryContract>()),
     );
-    gh.singleton<_i671.MainCubit>(
-      () => _i671.MainCubit(gh<_i614.AuthRepository>()),
+    gh.factory<_i38.SettingsCubit>(
+      () => _i38.SettingsCubit(gh<_i614.AuthRepository>()),
     );
     gh.factory<_i671.ForgetPasswordCubit>(
       () => _i671.ForgetPasswordCubit(gh<_i614.AuthRepository>()),

@@ -5,7 +5,7 @@ class LoginState {
 
   LoginState({this.obscurePassword = true});
 
-  LoginState copyWith({bool? obscurePassword, bool? obscureRePassword}) {
+  LoginState copyWith({bool? obscurePassword}) {
     return LoginState(
       obscurePassword: obscurePassword ?? this.obscurePassword,
     );
@@ -27,7 +27,10 @@ class LoginProcess extends LoginActions {
 
 sealed class LoginNavigation {}
 class NavigateToRegisterScreen extends LoginNavigation {}
-class NavigateToMainScreen extends LoginNavigation {}
+class NavigateToMainScreen extends LoginNavigation {
+  String uid;
+  NavigateToMainScreen({required this.uid});
+}
 class NavigateToForgetPasswordScreen extends LoginNavigation {}
 class ShowLoadingDialog extends LoginNavigation {}
 class ShowErrorDialog extends LoginNavigation {

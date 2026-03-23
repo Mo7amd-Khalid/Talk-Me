@@ -51,7 +51,7 @@ class _LoginViewState extends State<LoginView> {
             posActionTitle: context.locale!.tryAgain,
           );
         case NavigateToMainScreen():
-          Navigator.pushReplacementNamed(context, Routes.mainViews);
+          Navigator.pushNamedAndRemoveUntil(context, Routes.mainViews,(route) => false,arguments: navigationState.uid);
         case NavigateToForgetPasswordScreen():
           Navigator.pushNamed(context, Routes.forgetPasswordViews);
       }

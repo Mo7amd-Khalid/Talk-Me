@@ -54,4 +54,72 @@ class FirestoreRemoteDatasourceImpl implements FirestoreRemoteDatasource {
       return Success(data: users);
     });
   }
+
+  @override
+  Future<Results<void>> sendAddRequest(String myID, String friendID) {
+    return safeCall(()async{
+      var myData = await _userFirestore.doc(myID).get();
+      UserDm me = myData.data()!;
+      me.sentRequest.add(friendID);
+      _userFirestore.doc(myID).update(me.toFirestore());
+
+
+      var friendData = await _userFirestore.doc(friendID).get();
+      UserDm friendUser = friendData.data()!;
+      friendUser.receivedRequest.add(myID);
+      _userFirestore.doc(friendID).update(friendUser.toFirestore());
+      return Success();
+
+    });
+  }
+
+  @override
+  Future<Results<void>> removeAddRequest(String myID, String friendID) {
+    return safeCall(()async{
+      var myData = await _userFirestore.doc(myID).get();
+      UserDm me = myData.data()!;
+      me.sentRequest.remove(friendID);
+      me.receivedRequest.remove(friendID);
+      _userFirestore.doc(myID).update(me.toFirestore());
+
+
+      var friendData = await _userFirestore.doc(friendID).get();
+      UserDm friendUser = friendData.data()!;
+      friendUser.receivedRequest.remove(myID);
+      friendUser.sentRequest.remove(myID);
+      _userFirestore.doc(friendID).update(friendUser.toFirestore());
+      return Success();
+
+    });
+  }
+
+  @override
+  Future<Results<UserDm>> getMyUserData(String uid) {
+    return safeCall(()async{
+      var response = await _userFirestore.doc(uid).get();
+      return Success(data: response.data());
+    });
+  }
+
+  @override
+  Future<Results<void>> acceptAddRequest(String myID, String friendID) {
+    return safeCall(()async{
+      var myData = await _userFirestore.doc(myID).get();
+      UserDm me = myData.data()!;
+      me.receivedRequest.remove(friendID);
+      me.friendsIds.add(friendID);
+      _userFirestore.doc(myID).update(me.toFirestore());
+
+
+      var friendData = await _userFirestore.doc(friendID).get();
+      UserDm friendUser = friendData.data()!;
+      friendUser.sentRequest.remove(myID);
+      friendUser.friendsIds.add(myID);
+      _userFirestore.doc(friendID).update(friendUser.toFirestore());
+
+      return Success();
+    });
+  }
+
+
 }

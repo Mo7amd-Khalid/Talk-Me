@@ -52,12 +52,4 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource{
     });
   }
 
-  @override
-  Future<Results<User>> getCurrentUserData() {
-    return safeCall(()async{
-      var user = _firebaseAuth.currentUser;
-      return Success(data: user);
-    });
-  }
-
 }

@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
 String initialRoute(SharedPreferences shared){
   if(shared.getBool(AppKeysConstant.onboardingKey)??false)
     {
-      if(shared.getBool(AppKeysConstant.loginKey)??false)
+      if((shared.getString(AppKeysConstant.loginKey)??"").isNotEmpty)
         {
           return Routes.mainViews;
         }

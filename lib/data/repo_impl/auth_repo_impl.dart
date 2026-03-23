@@ -9,7 +9,6 @@ import 'package:talk_me/data/datasource/contract/local_datasource.dart';
 import 'package:talk_me/data/models/user_dm.dart';
 import 'package:talk_me/data/network/results.dart';
 import 'package:talk_me/domain/repository/auth_repository.dart';
-
 import '../../domain/mapper/app_exception_mapper.dart';
 
 @Injectable(as: AuthRepository)
@@ -39,7 +38,7 @@ class AuthRepoImpl implements AuthRepository {
             _localDatasource.saveDataInSharedPreferences(
               context,
               AppKeysConstant.loginKey,
-              true,
+              response.data!.user!.uid,
             );
             return Success(data: response.data);
           } else {
@@ -84,7 +83,8 @@ class AuthRepoImpl implements AuthRepository {
             name: name,
             email: email,
             image: image,
-            additionRequest: [],
+            sentRequest: [],
+            receivedRequest: [],
             friendsIds: [],
           );
           response.data!.user?.updatePhotoURL(image);
@@ -126,14 +126,15 @@ class AuthRepoImpl implements AuthRepository {
     }
   }
 
-  @override
-  Future<Results<User>> getCurrentUserData() async{
-    var response = await _authRemoteDatasource.getCurrentUserData();
-    switch (response) {
 
-      case Success<User>():
-        return Success(data: response.data);
-      case Failure<User>():
+  @override
+  Future<Results<void>> logout(BuildContext context) async{
+    var response = await _authRemoteDatasource.logout();
+    switch(response) {
+      case Success<void>():
+        await _localDatasource.saveDataInSharedPreferences(context, AppKeysConstant.loginKey, "");
+        return Success();
+      case Failure<void>():
         return Failure(exception: response.exception, message: response.message);
     }
   }
