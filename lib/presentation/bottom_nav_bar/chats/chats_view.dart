@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:talk_me/core/di/di.dart';
+import 'package:talk_me/core/routes/routes.dart';
 import 'package:talk_me/core/utils/resources.dart';
 import 'package:talk_me/core/utils/white_spaces.dart';
 import 'package:talk_me/presentation/bottom_nav_bar/chats/cubit/chat_cubit.dart';
@@ -30,6 +31,12 @@ class _ChatsViewState extends State<ChatsView> {
   void initState() {
     super.initState();
     _chatCubit.doAction(GetFriends(_mainCubit.state.currentUser.data!));
+    _chatCubit.navigation.listen((state){
+      switch(state) {
+        case NavigateToChatScreen():
+          Navigator.pushNamed(context, Routes.chatScreenViews,arguments: state.friendData);
+      }
+    });
   }
 
   @override
@@ -97,31 +104,36 @@ class _ChatsViewState extends State<ChatsView> {
                           ? AppColors.gray600
                           : AppColors.white,
                     ),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(500),
-                          child: state.friends.data![index].image.isNotEmpty
-                              ? buildProfileImage(
-                            path: state.friends.data![index].image,
-                            context: context,
-                            height: context.heightSize * 0.1,
-                            width: context.widthSize * 0.22,
-                            color: AppColors.blue500,
-                          )
-                              : CircularProgressIndicator(),
-                        ),
-                        5.horizontalSpace,
-                        Expanded(
-                          child: Text(
-                            state.friends.data![index].name,
-                            style: context.textStyle.titleMedium!.copyWith(
-                              fontSize: 18,
+                    child: InkWell(
+                      onTap: (){
+                        _chatCubit.doAction(GoToChatScreen(state.friends.data![index]));
+                      },
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(500),
+                            child: state.friends.data![index].image.isNotEmpty
+                                ? buildProfileImage(
+                              path: state.friends.data![index].image,
+                              context: context,
+                              height: context.heightSize * 0.1,
+                              width: context.widthSize * 0.22,
+                              color: AppColors.blue500,
+                            )
+                                : CircularProgressIndicator(),
+                          ),
+                          5.horizontalSpace,
+                          Expanded(
+                            child: Text(
+                              state.friends.data![index].name,
+                              style: context.textStyle.titleMedium!.copyWith(
+                                fontSize: 18,
+                              ),
                             ),
                           ),
-                        ),
-                        Icon(Icons.arrow_forward_ios_outlined),
-                      ],
+                          Icon(Icons.arrow_forward_ios_outlined),
+                        ],
+                      ),
                     ),
                   ),
                   separatorBuilder: (_,_) => 10.verticalSpace,

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:talk_me/core/constant/app_constant.dart';
@@ -13,22 +14,20 @@ import '../../domain/mapper/app_exception_mapper.dart';
 
 @Injectable(as: AuthRepository)
 class AuthRepoImpl implements AuthRepository {
-  AuthRepoImpl(
-    this._authRemoteDatasource,
-    this._firestoreRemoteDatasource,
-    this._localDatasource,
-  );
+  AuthRepoImpl(this._authRemoteDatasource,
+      this._firestoreRemoteDatasource,
+      this._localDatasource,this.messaging);
 
   final AuthRemoteDatasource _authRemoteDatasource;
   final FirestoreRemoteDatasource _firestoreRemoteDatasource;
   final LocalDatasource _localDatasource;
+  final FirebaseMessaging messaging;
+
 
   @override
-  Future<Results<UserCredential>> login(
-    BuildContext context,
-    String email,
-    String password,
-  ) async {
+  Future<Results<UserCredential>> login(BuildContext context,
+      String email,
+      String password,) async {
     var response = await _authRemoteDatasource.login(email, password);
     switch (response) {
       case Success<UserCredential>():
@@ -40,6 +39,7 @@ class AuthRepoImpl implements AuthRepository {
               AppKeysConstant.loginKey,
               response.data!.user!.uid,
             );
+
             return Success(data: response.data);
           } else {
             await _firestoreRemoteDatasource.removeUserData(
@@ -49,25 +49,25 @@ class AuthRepoImpl implements AuthRepository {
             return Failure(
               exception: NotVerifiedEmailException(),
               message:
-                  AppExceptionMapper.convertStringMessageToLocalizationStringMessage(
-                    NotVerifiedEmailException(),
-                    context,
-                  ),
+              AppExceptionMapper
+                  .convertStringMessageToLocalizationStringMessage(
+                NotVerifiedEmailException(),
+                context,
+              ),
             );
           }
         }
       case Failure<UserCredential>():
-        return Failure(exception: response.exception, message: response.message);
+        return Failure(
+            exception: response.exception, message: response.message);
     }
   }
 
   @override
-  Future<Results<UserCredential>> register(
-    String name,
-    String image,
-    String email,
-    String password,
-  ) async {
+  Future<Results<UserCredential>> register(String name,
+      String image,
+      String email,
+      String password,) async {
     var response = await _authRemoteDatasource.register(
       name,
       image,
@@ -78,6 +78,7 @@ class AuthRepoImpl implements AuthRepository {
       case Success<UserCredential>():
         {
           await sendEmailVerification();
+          String fcmToken = await messaging.getToken() ?? "";
           UserDm user = UserDm(
             id: response.data!.user!.uid,
             name: name,
@@ -86,8 +87,8 @@ class AuthRepoImpl implements AuthRepository {
             sentRequest: [],
             receivedRequest: [],
             friendsIds: [],
+            fcm: fcmToken,
           );
-          response.data!.user?.updatePhotoURL(image);
           response.data!.user?.updateDisplayName(name);
           await _firestoreRemoteDatasource.setUserData(user);
           return Success(data: response.data);
@@ -115,27 +116,32 @@ class AuthRepoImpl implements AuthRepository {
   }
 
   @override
-  Future<Results<void>> sendResetPasswordEmail(String email, BuildContext context) async{
-    var response = await _firestoreRemoteDatasource.checkIfUserExists(email, context);
-    switch(response) {
+  Future<Results<void>> sendResetPasswordEmail(String email,
+      BuildContext context) async {
+    var response = await _firestoreRemoteDatasource.checkIfUserExists(
+        email, context);
+    switch (response) {
       case Success<bool>():
         await _authRemoteDatasource.sendResetPasswordEmail(email);
         return Success();
       case Failure<bool>():
-        return Failure(exception: response.exception, message: response.message);
+        return Failure(
+            exception: response.exception, message: response.message);
     }
   }
 
 
   @override
-  Future<Results<void>> logout(BuildContext context) async{
+  Future<Results<void>> logout(BuildContext context) async {
     var response = await _authRemoteDatasource.logout();
-    switch(response) {
+    switch (response) {
       case Success<void>():
-        await _localDatasource.saveDataInSharedPreferences(context, AppKeysConstant.loginKey, "");
+        await _localDatasource.saveDataInSharedPreferences(
+            context, AppKeysConstant.loginKey, "");
         return Success();
       case Failure<void>():
-        return Failure(exception: response.exception, message: response.message);
+        return Failure(
+            exception: response.exception, message: response.message);
     }
   }
 }

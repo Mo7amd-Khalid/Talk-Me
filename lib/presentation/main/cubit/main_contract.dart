@@ -34,4 +34,7 @@ class ChangeCurrentIndex extends MainActions {
   ChangeCurrentIndex(this.index);
 }
 
+class RefreshFCMToken extends MainActions {}
+
+
 sealed class MainNavigation {}

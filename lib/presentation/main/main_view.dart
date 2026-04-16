@@ -15,6 +15,7 @@ import 'cubit/main_contract.dart';
 class MainView extends StatefulWidget {
   const MainView({super.key});
 
+
   @override
   State<MainView> createState() => _MainViewState();
 }
@@ -28,6 +29,7 @@ class _MainViewState extends State<MainView> {
     super.initState();
     _mainCubit.doAction(ChangeCurrentIndex(0));
     _mainCubit.doAction(GetCurrentUserData());
+    _mainCubit.doAction(RefreshFCMToken());
   }
 
   @override
@@ -62,10 +64,6 @@ class _MainViewState extends State<MainView> {
                           ],
                         ),
                   actions: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.search_outlined),
-                    ),
                     //Change Theme
                     IconButton(
                       onPressed: () {

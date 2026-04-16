@@ -18,18 +18,18 @@ class GetUsers extends UsersActions{
   GetUsers(this.myData);
 }
 class SendAddRequest extends UsersActions{
-  String myID;
-  String friendID;
-  SendAddRequest(this.myID, this.friendID);
+  UserDm myData;
+  UserDm friendID;
+  SendAddRequest(this.myData, this.friendID);
 }
 class RemoveAddRequest extends UsersActions{
-  String myID;
-  String friendID;
-  RemoveAddRequest(this.myID, this.friendID);
+  UserDm myData;
+  UserDm friendID;
+  RemoveAddRequest(this.myData, this.friendID);
 }
 class AcceptAddRequest extends UsersActions{
   UserDm myData;
-  String friendID;
+  UserDm friendID;
   AcceptAddRequest(this.myData, this.friendID);
 }
 
