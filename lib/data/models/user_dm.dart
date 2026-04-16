@@ -5,6 +5,7 @@ class UserDm {
   String name;
   String email;
   String image;
+  String fcm;
   List<String> friendsIds;
   List<String> sentRequest;
   List<String> receivedRequest;
@@ -17,6 +18,7 @@ class UserDm {
     required this.sentRequest,
     required this.receivedRequest,
     required this.friendsIds,
+    required this.fcm,
   });
 
 
@@ -30,6 +32,7 @@ class UserDm {
       name: data['name'],
       email: data['email'],
       image: data['image'],
+      fcm: data['fcm'],
       sentRequest: ((data['sentRequest']??[]) as List<dynamic>).map((e) => e.toString()).toList(),
       receivedRequest: ((data['receivedRequest']??[]) as List<dynamic>).map((e) => e.toString()).toList(),
       friendsIds: ((data['friendsIds']??[]) as List<dynamic>).map((e) => e.toString()).toList(),
@@ -42,6 +45,7 @@ class UserDm {
        "name": name,
        "email": email,
        "image": image,
+       "fcm": fcm,
        "sentRequest": sentRequest,
        "receivedRequest": receivedRequest,
        "friendsIds": friendsIds,

@@ -16,7 +16,15 @@ class GetFriends extends ChatActions{
   UserDm myData;
   GetFriends(this.myData);
 }
+class GoToChatScreen extends ChatActions{
+  UserDm friendData;
+  GoToChatScreen(this.friendData);
+}
 
 
 
 sealed class ChatNavigation{}
+class NavigateToChatScreen extends ChatNavigation{
+  UserDm friendData;
+  NavigateToChatScreen(this.friendData);
+}

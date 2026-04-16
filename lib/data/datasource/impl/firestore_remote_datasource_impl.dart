@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:talk_me/core/constant/app_constant.dart';
 import 'package:talk_me/core/constant/app_exceptions.dart';
+import 'package:talk_me/core/di/di.dart';
 import 'package:talk_me/data/datasource/contract/firestore_remote_datasource.dart';
+import 'package:talk_me/data/models/message_dm.dart';
 import 'package:talk_me/data/models/user_dm.dart';
 import 'package:talk_me/data/network/results.dart';
 import 'package:talk_me/data/network/safeCall.dart';
@@ -10,9 +14,10 @@ import 'package:talk_me/domain/mapper/app_exception_mapper.dart';
 
 @Injectable(as: FirestoreRemoteDatasource)
 class FirestoreRemoteDatasourceImpl implements FirestoreRemoteDatasource {
-  FirestoreRemoteDatasourceImpl(this._userFirestore);
+  FirestoreRemoteDatasourceImpl(this._userFirestore, this._firestore);
 
   final CollectionReference<UserDm> _userFirestore;
+  final FirebaseFirestore _firestore;
 
   @override
   Future<Results<void>> setUserData(UserDm user) {
@@ -34,21 +39,27 @@ class FirestoreRemoteDatasourceImpl implements FirestoreRemoteDatasource {
   @override
   Future<Results<bool>> checkIfUserExists(String email, BuildContext context) {
     return safeCall(() async {
-      var response =  await _userFirestore
+      var response = await _userFirestore
           .where('email', isEqualTo: email)
           .limit(1)
           .get();
-      if(response.docs.isEmpty)
-        {
-          return Failure(exception: UserNotFoundException(), message: AppExceptionMapper.convertStringMessageToLocalizationStringMessage(UserNotFoundException(), context));
-        }
+      if (response.docs.isEmpty) {
+        return Failure(
+          exception: UserNotFoundException(),
+          message:
+              AppExceptionMapper.convertStringMessageToLocalizationStringMessage(
+                UserNotFoundException(),
+                context,
+              ),
+        );
+      }
       return Success(data: true);
     });
   }
 
   @override
   Future<Results<List<UserDm>>> getUsers() {
-    return safeCall(()async{
+    return safeCall(() async {
       var response = await _userFirestore.get();
       List<UserDm> users = response.docs.map((doc) => doc.data()).toList();
       return Success(data: users);
@@ -57,31 +68,28 @@ class FirestoreRemoteDatasourceImpl implements FirestoreRemoteDatasource {
 
   @override
   Future<Results<void>> sendAddRequest(String myID, String friendID) {
-    return safeCall(()async{
+    return safeCall(() async {
       var myData = await _userFirestore.doc(myID).get();
       UserDm me = myData.data()!;
       me.sentRequest.add(friendID);
       _userFirestore.doc(myID).update(me.toFirestore());
-
 
       var friendData = await _userFirestore.doc(friendID).get();
       UserDm friendUser = friendData.data()!;
       friendUser.receivedRequest.add(myID);
       _userFirestore.doc(friendID).update(friendUser.toFirestore());
       return Success();
-
     });
   }
 
   @override
   Future<Results<void>> removeAddRequest(String myID, String friendID) {
-    return safeCall(()async{
+    return safeCall(() async {
       var myData = await _userFirestore.doc(myID).get();
       UserDm me = myData.data()!;
       me.sentRequest.remove(friendID);
       me.receivedRequest.remove(friendID);
       _userFirestore.doc(myID).update(me.toFirestore());
-
 
       var friendData = await _userFirestore.doc(friendID).get();
       UserDm friendUser = friendData.data()!;
@@ -89,13 +97,12 @@ class FirestoreRemoteDatasourceImpl implements FirestoreRemoteDatasource {
       friendUser.sentRequest.remove(myID);
       _userFirestore.doc(friendID).update(friendUser.toFirestore());
       return Success();
-
     });
   }
 
   @override
   Future<Results<UserDm>> getMyUserData(String uid) {
-    return safeCall(()async{
+    return safeCall(() async {
       var response = await _userFirestore.doc(uid).get();
       return Success(data: response.data());
     });
@@ -103,13 +110,12 @@ class FirestoreRemoteDatasourceImpl implements FirestoreRemoteDatasource {
 
   @override
   Future<Results<void>> acceptAddRequest(String myID, String friendID) {
-    return safeCall(()async{
+    return safeCall(() async {
       var myData = await _userFirestore.doc(myID).get();
       UserDm me = myData.data()!;
       me.receivedRequest.remove(friendID);
       me.friendsIds.add(friendID);
       _userFirestore.doc(myID).update(me.toFirestore());
-
 
       var friendData = await _userFirestore.doc(friendID).get();
       UserDm friendUser = friendData.data()!;
@@ -117,9 +123,65 @@ class FirestoreRemoteDatasourceImpl implements FirestoreRemoteDatasource {
       friendUser.friendsIds.add(myID);
       _userFirestore.doc(friendID).update(friendUser.toFirestore());
 
+      await _userFirestore
+          .doc(myID)
+          .collection(AppKeysConstant.friendsCollectionKey)
+          .doc(friendID)
+          .set({"id": friendID});
+
+      await _userFirestore
+          .doc(friendID)
+          .collection(AppKeysConstant.friendsCollectionKey)
+          .doc(myID)
+          .set({"id": myID});
+
       return Success();
     });
   }
 
+  @override
+  Results<Stream<QuerySnapshot<MessageDm>>> getMessages(String friendId) {
+    SharedPreferences preferences = getIt();
+    Stream<QuerySnapshot<MessageDm>> messages = _firestore
+        .collection(AppKeysConstant.usersCollectionKey)
+        .doc(preferences.getString(AppKeysConstant.loginKey))
+        .collection(AppKeysConstant.friendsCollectionKey)
+        .doc(friendId)
+        .collection(AppKeysConstant.chatsCollectionKey)
+        .withConverter(fromFirestore: MessageDm.fromFirestore, toFirestore: (model, _) => model.toFirestore(),)
+        .orderBy("milliSecondTime").snapshots();
+    return Success(data: messages);
+  }
 
+  @override
+  Future<Results<void>> sendMessage(MessageDm message, String friendId) {
+    return safeCall(() async {
+      SharedPreferences preferences = getIt();
+      var myChat = _firestore
+          .collection(AppKeysConstant.usersCollectionKey)
+          .doc(preferences.getString(AppKeysConstant.loginKey))
+          .collection(AppKeysConstant.friendsCollectionKey)
+          .doc(friendId)
+          .collection(AppKeysConstant.chatsCollectionKey)
+          .withConverter(fromFirestore: MessageDm.fromFirestore, toFirestore: (model, _) => model.toFirestore(),).doc();
+      message.id = myChat.id;
+
+      await myChat.set(message);
+      await _firestore
+          .collection(AppKeysConstant.usersCollectionKey)
+          .doc(friendId)
+          .collection(AppKeysConstant.friendsCollectionKey)
+          .doc(preferences.getString(AppKeysConstant.loginKey))
+          .collection(AppKeysConstant.chatsCollectionKey)
+          .withConverter(fromFirestore: MessageDm.fromFirestore, toFirestore: (model, _) => model.toFirestore(),).doc(message.id).set(message);
+
+      return Success();
+    });
+  }
+
+  @override
+  Future<Results<void>> refreshFCMToken(String uid, String newFCToken) {
+    // TODO: implement refreshFCMToken
+    throw UnimplementedError();
+  }
 }

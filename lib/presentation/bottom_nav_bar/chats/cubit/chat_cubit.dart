@@ -18,6 +18,8 @@ class ChatCubit extends BaseCubit<ChatState, ChatActions, ChatNavigation>{
     switch(action) {
       case GetFriends():
         _getFriends(action.myData);
+      case GoToChatScreen():
+        _goToChatScreen(action.friendData);
     }
   }
 
@@ -30,5 +32,9 @@ class ChatCubit extends BaseCubit<ChatState, ChatActions, ChatNavigation>{
       case Failure<List<UserDm>>():
         emit(state.copyWith(friends: Resources.failure(exception: response.exception, message: response.message)));
     }
+  }
+
+  void _goToChatScreen(UserDm friedData) {
+    emitNavigation(NavigateToChatScreen(friedData));
   }
 }

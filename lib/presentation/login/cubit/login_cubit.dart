@@ -4,13 +4,15 @@ import 'package:injectable/injectable.dart';
 import 'package:talk_me/core/base/base_cubit.dart';
 import 'package:talk_me/data/network/results.dart';
 import 'package:talk_me/domain/repository/auth_repository.dart';
+import 'package:talk_me/domain/repository/repository_contract.dart';
 import 'login_contract.dart';
 
 @injectable
 class LoginCubit extends BaseCubit<LoginState, LoginActions, LoginNavigation>{
-  LoginCubit(this._authRepository) :super(LoginState());
+  LoginCubit(this._authRepository ,this._repo) :super(LoginState());
 
   final AuthRepository _authRepository;
+  final RepositoryContract _repo;
 
   @override
   Future<void> doAction(LoginActions action) async{
@@ -40,6 +42,7 @@ class LoginCubit extends BaseCubit<LoginState, LoginActions, LoginNavigation>{
     switch(response) {
       case Success<UserCredential>():
         emitNavigation(NavigateToMainScreen(uid: response.data!.user!.uid));
+        await _repo.refreshFCMToken(response.data!.user!.uid);
       case Failure<UserCredential>():
         emitNavigation(ShowErrorDialog(message: response.message!));
     }

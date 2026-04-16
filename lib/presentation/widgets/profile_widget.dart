@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:talk_me/core/theme/app_colors.dart';
 
-import '../../core/utils/context_func.dart';
 
 Widget buildProfileImage({
   required String path,

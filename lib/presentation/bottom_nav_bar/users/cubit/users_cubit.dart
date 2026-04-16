@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:talk_me/core/base/base_cubit.dart';
+import 'package:talk_me/data/models/notification_dto.dart';
 import 'package:talk_me/data/models/user_dm.dart';
 import 'package:talk_me/data/network/results.dart';
 import 'package:talk_me/domain/repository/repository_contract.dart';
@@ -9,8 +10,7 @@ import 'package:talk_me/presentation/main/cubit/main_cubit.dart';
 import '../../../../core/utils/resources.dart';
 
 @injectable
-class UsersCubit
-    extends BaseCubit<UsersState, UsersActions, UsersNavigation> {
+class UsersCubit extends BaseCubit<UsersState, UsersActions, UsersNavigation> {
   UsersCubit(this._repositoryContract, this._mainCubit) : super(UsersState());
 
   final RepositoryContract _repositoryContract;
@@ -22,9 +22,9 @@ class UsersCubit
       case GetUsers():
         _getUsers(action.myData);
       case SendAddRequest():
-        _sendAddRequest(action.myID, action.friendID);
+        _sendAddRequest(action.myData, action.friendID);
       case RemoveAddRequest():
-        _removeAddRequest(action.myID, action.friendID);
+        _removeAddRequest(action.myData, action.friendID);
       case AcceptAddRequest():
         _acceptAddRequest(action.myData, action.friendID);
     }
@@ -49,34 +49,63 @@ class UsersCubit
     }
   }
 
-  void _sendAddRequest(String myID, String friendID) async {
-    var response = await _repositoryContract.sendAddRequest(myID, friendID);
+  void _sendAddRequest(UserDm myData, UserDm friendData) async {
+    var response = await _repositoryContract.sendAddRequest(
+      myData,
+      friendData,
+    );
     switch (response) {
       case Success<void>():
         _mainCubit.doAction(GetCurrentUserData());
       case Failure<void>():
-        emit(state.copyWith(users: Resources.failure(exception: response.exception, message: response.message)));
+        emit(
+          state.copyWith(
+            users: Resources.failure(
+              exception: response.exception,
+              message: response.message,
+            ),
+          ),
+        );
     }
   }
 
-  void _removeAddRequest(String myID, String friendID) async{
-    var response = await _repositoryContract.removeAddRequest(myID, friendID);
+  void _removeAddRequest(UserDm myData, UserDm friendData) async {
+    var response = await _repositoryContract.removeAddRequest(myData, friendData);
     switch (response) {
       case Success<void>():
         _mainCubit.doAction(GetCurrentUserData());
       case Failure<void>():
-        emit(state.copyWith(users: Resources.failure(exception: response.exception, message: response.message)));
+        emit(
+          state.copyWith(
+            users: Resources.failure(
+              exception: response.exception,
+              message: response.message,
+            ),
+          ),
+        );
     }
   }
 
-  void _acceptAddRequest(UserDm myData, String friendID) async{
-    var response = await _repositoryContract.acceptAddRequest(myData.id, friendID);
+  void _acceptAddRequest(UserDm myData, UserDm friendData) async {
+    var response = await _repositoryContract.acceptAddRequest(
+      myData,
+      friendData,
+    );
     switch (response) {
       case Success<void>():
         _mainCubit.doAction(GetCurrentUserData());
+        List<UserDm> newUser = state.users.data!;
+        newUser.removeWhere((UserDm user) => user.id == friendData.id);
+        emit(state.copyWith(users: Resources.success(data: newUser)));
       case Failure<void>():
-        emit(state.copyWith(users: Resources.failure(exception: response.exception, message: response.message)));
+        emit(
+          state.copyWith(
+            users: Resources.failure(
+              exception: response.exception,
+              message: response.message,
+            ),
+          ),
+        );
     }
   }
-
 }

@@ -73,14 +73,15 @@ class UserItem extends StatelessWidget {
                                   ? FilledButton(
                                       onPressed: () async {
                                         if (state.currentUser.data!.receivedRequest.contains(user.id)) {
-                                          usersCubit.doAction(AcceptAddRequest(state.currentUser.data!, user.id,),);
+                                          usersCubit.doAction(AcceptAddRequest(state.currentUser.data!, user,),);
                                         } else if(state.currentUser.data!.friendsIds.contains(user.id)){
                                           //todo go to chat screen
                                         }else {
+                                          print(state.currentUser.data!.name);
                                           usersCubit.doAction(
                                             SendAddRequest(
-                                              state.currentUser.data!.id,
-                                              user.id,
+                                              state.currentUser.data!,
+                                              user,
                                             ),
                                           );
                                         }
@@ -107,8 +108,8 @@ class UserItem extends StatelessWidget {
                                       onPressed: () {
                                         usersCubit.doAction(
                                           RemoveAddRequest(
-                                            state.currentUser.data!.id,
-                                            user.id,
+                                            state.currentUser.data!,
+                                            user,
                                           ),
                                         );
                                       },
@@ -128,8 +129,8 @@ class UserItem extends StatelessWidget {
                                   onPressed: () {
                                     usersCubit.doAction(
                                       RemoveAddRequest(
-                                        state.currentUser.data!.id,
-                                        user.id,
+                                        state.currentUser.data!,
+                                        user,
                                       ),
                                     );
                                   },
